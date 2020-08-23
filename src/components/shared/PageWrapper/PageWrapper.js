@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const PageWrapper = styled.div`
-  width: 90%;
+  width: 95%;
   max-width: 1600px;
   display: flex;
   flex-direction: column;
@@ -12,4 +12,12 @@ export const PageWrapper = styled.div`
   @media (min-width: 768px) {
     flex-flow: row wrap;
   }
+
+  ${({ profiledata }) =>
+    profiledata &&
+    css`
+      @media (min-width: 768px) {
+        justify-content: center;
+      }
+    `}
 `;

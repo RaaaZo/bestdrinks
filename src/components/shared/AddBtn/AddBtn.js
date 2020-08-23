@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import addDrink from 'assets/svg/addDrink.svg';
+import styled from "styled-components";
+import addDrink from "assets/svg/addDrink.svg";
 
 export const AddBtn = styled.div`
   position: fixed;
@@ -8,7 +8,8 @@ export const AddBtn = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: ${({theme}) => theme.accentsColor};
+  background-color: ${({ theme }) => theme.accentsColor};
+  border: 2px solid ${({ theme }) => theme.secondaryColor};
   background-image: url(${addDrink});
   background-repeat: no-repeat;
   background-size: 80%;

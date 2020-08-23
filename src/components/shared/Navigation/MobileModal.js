@@ -1,16 +1,17 @@
-import React, {useContext, useState} from 'react';
-import styled, {css} from 'styled-components';
-import {NavLink} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { useContext, useState } from "react";
+import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import drinks from 'assets/svg/drinks.svg';
-import favourite from 'assets/svg/favourite.svg';
-import login from 'assets/svg/login.svg';
-import logout from 'assets/svg/logout.svg';
-import myDrinks from 'assets/svg/myDrinks.svg';
-import profile from 'assets/svg/profile.svg';
-import {AuthContext} from 'context/AuthContext';
-import LogoutModal from '../LogoutModal/LogoutModal';
+import drinks from "assets/svg/drinks.svg";
+import favourite from "assets/svg/favourite.svg";
+import login from "assets/svg/login.svg";
+import logout from "assets/svg/logout.svg";
+import myDrinks from "assets/svg/myDrinks.svg";
+import profile from "assets/svg/profile.svg";
+import { AuthContext } from "context/AuthContext";
+import LogoutModal from "../LogoutModal/LogoutModal";
+import { CloseModal } from "../CloseModal/CloseModal";
 
 const Modal = styled.div`
   position: fixed;
@@ -23,7 +24,7 @@ const Modal = styled.div`
     180deg,
     #ff5533 0%,
     #ff5533 50%,
-    rgba(255, 85, 51, 0.7) 100%
+    rgba(255, 85, 51, 0.95) 100%
   );
   box-shadow: -8px 0px 14px -1px rgba(255, 85, 51, 0.75);
   z-index: 998;
@@ -41,7 +42,7 @@ const Modal = styled.div`
     display: none;
   }
 
-  ${({isMenuOpen}) =>
+  ${({ isMenuOpen }) =>
     isMenuOpen &&
     css`
       transform: translateX(0);
@@ -56,7 +57,7 @@ const LinksWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  ${({isLoggedIn}) =>
+  ${({ isLoggedIn }) =>
     isLoggedIn &&
     css`
       justify-content: flex-start;
@@ -66,7 +67,7 @@ const LinksWrapper = styled.div`
 const StyledNavLinks = styled.div`
   margin-top: 10px;
   padding: 20px 40px;
-  font-size: ${({theme}) => theme.fontSize.l};
+  font-size: ${({ theme }) => theme.fontSize.l};
   font-weight: bold;
   cursor: pointer;
 
@@ -112,8 +113,8 @@ const StyledImg = styled.img`
   border: 2px solid black;
 `;
 
-const MobileModal = ({handleSetIsMenuOpen, isMenuOpen}) => {
-  const {isLoggedIn, handleIsLoginModalOpen} = useContext(AuthContext);
+const MobileModal = ({ handleSetIsMenuOpen, isMenuOpen }) => {
+  const { isLoggedIn, handleIsLoginModalOpen } = useContext(AuthContext);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleIsLogoutModalOpen = () => {
@@ -126,16 +127,17 @@ const MobileModal = ({handleSetIsMenuOpen, isMenuOpen}) => {
         handleIsLogoutModalOpen={handleIsLogoutModalOpen}
         isLogoutModalOpen={isLogoutModalOpen}
       />
+      <CloseModal isModalOpen={isMenuOpen} onClick={handleSetIsMenuOpen} />
       <Modal isMenuOpen={isMenuOpen}>
         <LinksWrapper>
           <StyledNavLinks
             as={NavLink}
             onClick={handleSetIsMenuOpen}
             exact
-            activeClassName='activeLink'
-            to='/'
+            activeClassName="activeLink"
+            to="/"
           >
-            <StyledImg src={drinks} alt='strona główna' />
+            <StyledImg src={drinks} alt="strona główna" />
           </StyledNavLinks>
 
           {isLoggedIn ? (
@@ -144,41 +146,41 @@ const MobileModal = ({handleSetIsMenuOpen, isMenuOpen}) => {
                 as={NavLink}
                 onClick={handleSetIsMenuOpen}
                 exact
-                activeClassName='activeLink'
-                to='/profile'
+                activeClassName="activeLink"
+                to="/profile"
               >
-                <StyledImg src={profile} alt='profil' />
+                <StyledImg src={profile} alt="profil" />
               </StyledNavLinks>
               <StyledNavLinks
                 as={NavLink}
                 onClick={handleSetIsMenuOpen}
                 exact
-                activeClassName='activeLink'
-                to='/profile/favourites'
+                activeClassName="activeLink"
+                to="/profile/favourites"
               >
-                <StyledImg src={favourite} alt='ulubione' />
+                <StyledImg src={favourite} alt="ulubione" />
               </StyledNavLinks>
               <StyledNavLinks
                 as={NavLink}
                 onClick={handleSetIsMenuOpen}
                 exact
-                activeClassName='activeLink'
-                to='/profile/myRecipes'
+                activeClassName="activeLink"
+                to="/profile/myRecipes"
               >
-                <StyledImg src={myDrinks} alt='moje przepisy' />
+                <StyledImg src={myDrinks} alt="moje przepisy" />
               </StyledNavLinks>
 
               <StyledNavLinks
                 exact
                 as={NavLink}
-                activeClassName='activeLink'
-                to={'/'}
+                activeClassName="activeLink"
+                to={"/"}
                 onClick={() => {
                   handleSetIsMenuOpen();
                   handleIsLogoutModalOpen();
                 }}
               >
-                <StyledImg src={logout} alt='wylogowywanie' />
+                <StyledImg src={logout} alt="wylogowywanie" />
               </StyledNavLinks>
             </>
           ) : (
@@ -189,7 +191,7 @@ const MobileModal = ({handleSetIsMenuOpen, isMenuOpen}) => {
                   handleSetIsMenuOpen();
                 }}
                 src={login}
-                alt='logowanie'
+                alt="logowanie"
               />
             </StyledNavLinks>
           )}

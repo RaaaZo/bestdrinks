@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import MobileMenu from './MobileMenu';
-import MobileModal from './MobileModal';
+import React, { useState } from "react";
+import MobileMenu from "./MobileMenu";
+import MobileModal from "./MobileModal";
 
 const MobileNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +22,5 @@ const MobileNavigation = () => {
     </>
   );
 };
-
-MobileNavigation.propTypes = {};
 
 export default MobileNavigation;

@@ -1,14 +1,13 @@
 import React from "react";
-
-import HomeCards from "components/HomeCards/HomeCards";
 import { PageWrapper } from "components/shared/PageWrapper/PageWrapper";
+import AddRecipeForm from "components/AddRecipeForm/AddRecipeForm";
 
-const HomePage = () => {
+const AddRecipePage = () => {
   return (
     <PageWrapper>
-      <HomeCards />
+      <AddRecipeForm />
     </PageWrapper>
   );
 };
 
-export default HomePage;
+export default AddRecipePage;

@@ -7,8 +7,8 @@ import {
   StyledSvg,
   StyledDescription,
   DetailsData,
-  StyledCardButton,
   StyledDate,
+  StyledCardButton,
 } from "styles/CardStyles";
 import usePushHistory from "hooks/usePushHistory";
 
@@ -54,7 +54,7 @@ const DUMMY_DATA = [
   },
 ];
 
-const FavouriteCard = () => {
+const MyRecipesCards = () => {
   const pushToDetailedCard = usePushHistory();
 
   return (
@@ -65,7 +65,7 @@ const FavouriteCard = () => {
             <StyledSvg src={item.img} alt="zdjęcie drinka" />
             <StyledDescription>{item.shortDesc}</StyledDescription>
             <DetailsData>
-              <StyledCardButton>{item.user}</StyledCardButton>
+              <StyledCardButton>Edytuj</StyledCardButton>
               <StyledDate>{item.date}</StyledDate>
             </DetailsData>
           </CardWrapper>
@@ -75,4 +75,4 @@ const FavouriteCard = () => {
   );
 };
 
-export default FavouriteCard;
+export default MyRecipesCards;

@@ -1,7 +1,13 @@
-import React from 'react';
+import React from "react";
+import { PageWrapper } from "components/shared/PageWrapper/PageWrapper";
+import MyRecipesCards from "components/MyRecipesCards/MyRecipesCards";
 
 const MyRecipesPage = () => {
-  return <div>My recipes</div>;
+  return (
+    <PageWrapper>
+      <MyRecipesCards />
+    </PageWrapper>
+  );
 };
 
 export default MyRecipesPage;

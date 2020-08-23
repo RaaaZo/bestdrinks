@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { AuthContext } from "context/AuthContext";
 import { Link } from "react-router-dom";
@@ -9,7 +8,7 @@ import {
   StyledLabel,
   StyledField,
   StyledButton,
-  Wrapper
+  ModalFormikWrapper,
 } from "styles/FormikStyles";
 import { CloseModal } from "components/shared/CloseModal/CloseModal";
 
@@ -17,23 +16,23 @@ const AuthForm = () => {
   const {
     handleIsLoggedIn,
     handleIsLoginModalOpen,
-    isLoginModalOpen
+    isLoginModalOpen,
   } = useContext(AuthContext);
 
   return (
     <>
       <CloseModal
-        isLoginModalOpen={isLoginModalOpen}
+        isModalOpen={isLoginModalOpen}
         onClick={handleIsLoginModalOpen}
       />
-      <Wrapper isLoginModalOpen={isLoginModalOpen}>
+      <ModalFormikWrapper isModalOpen={isLoginModalOpen}>
         <StyledHeader>Zaloguj się</StyledHeader>
         <Formik
           initialValues={{
             email: "",
-            password: ""
+            password: "",
           }}
-          onSubmit={values => {
+          onSubmit={(values) => {
             console.log(values);
             handleIsLoggedIn();
             handleIsLoginModalOpen();
@@ -57,7 +56,7 @@ const AuthForm = () => {
             </StyledHeader>
           </StyledForm>
         </Formik>
-      </Wrapper>
+      </ModalFormikWrapper>
     </>
   );
 };

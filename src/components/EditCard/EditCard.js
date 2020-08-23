@@ -7,8 +7,10 @@ import {
   CardWrapper,
   StyledSvg,
   StyledDescription,
-  DetailsData
+  DetailsData,
+  StyledDate,
 } from "styles/CardStyles";
+import { StyledButton } from "styles/FormikStyles";
 
 const DUMMY_DATA = [
   {
@@ -21,7 +23,7 @@ const DUMMY_DATA = [
     recipe:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
     user: "Mateusz",
-    date: "13.08.2020"
+    date: "13.08.2020",
   },
   {
     id: 2,
@@ -33,7 +35,7 @@ const DUMMY_DATA = [
     recipe:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
     user: "Mateusz",
-    date: "13.08.2020"
+    date: "13.08.2020",
   },
   {
     id: 3,
@@ -45,26 +47,28 @@ const DUMMY_DATA = [
     recipe:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
     user: "Mateusz",
-    date: "13.08.2020"
-  }
+    date: "13.08.2020",
+  },
 ];
 
 const EditCard = () => {
   const { recipeId } = useParams();
 
-  const detailedDrink = DUMMY_DATA.filter(item => item.id === Number(recipeId));
+  const detailedDrink = DUMMY_DATA.filter(
+    (item) => item.id === Number(recipeId)
+  );
 
   return (
     <>
-      {detailedDrink.map(item => (
+      {detailedDrink.map((item) => (
         <Fragment key={item.id}>
           <CardWrapper detailedCard="true">
             <StyledSvg src={item.img} alt="zdjęcie drinka" />
             <StyledDescription>{item.longDesc}</StyledDescription>
             <StyledDescription>{item.recipe}</StyledDescription>
             <DetailsData>
-              <p>Edit</p>
-              <p>{item.date}</p>
+              <StyledButton>Edit</StyledButton>
+              <StyledDate>{item.date}</StyledDate>
             </DetailsData>
           </CardWrapper>
         </Fragment>

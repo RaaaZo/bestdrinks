@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const CloseModal = styled.div`
   position: fixed;
@@ -10,9 +10,9 @@ export const CloseModal = styled.div`
   transform: translateX(110%);
   transition: transform 1s ease-in-out;
 
-  ${({isLoginModalOpen}) =>
-    isLoginModalOpen &&
+  ${({ isModalOpen }) =>
+    isModalOpen &&
     css`
       transform: translateX(0);
-    `}
+    `};
 `;

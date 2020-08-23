@@ -1,15 +1,15 @@
-import styled, {css} from 'styled-components';
-import {Form, Field} from 'formik';
+import styled, { css } from "styled-components";
+import { Form, Field } from "formik";
 
-export const Wrapper = styled.div`
+export const ModalFormikWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(110%, -50%);
   width: 80%;
   height: 70%;
-  background-color: ${({theme}) => theme.secondaryColor};
-  border: 2px solid ${({theme}) => theme.accentsColor};
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border: 2px solid ${({ theme }) => theme.accentsColor};
   border-radius: 15px;
   transition: transform 0.8s 0.1s ease-in-out;
 
@@ -19,8 +19,8 @@ export const Wrapper = styled.div`
     top: 5%;
     transform: translate(150%, 0);
 
-    ${({isLoginModalOpen}) =>
-      isLoginModalOpen &&
+    ${({ isModalOpen }) =>
+      isModalOpen &&
       css`
         transform: translate(-50%, 0);
       `}
@@ -37,8 +37,8 @@ export const Wrapper = styled.div`
     top: 50%;
     transform: translate(150%, -50%);
 
-    ${({isLoginModalOpen}) =>
-      isLoginModalOpen &&
+    ${({ isModalOpen }) =>
+      isModalOpen &&
       css`
         transform: translate(-50%, -50%);
       `}
@@ -49,8 +49,8 @@ export const Wrapper = styled.div`
     height: 60%;
   }
 
-  ${({isLoginModalOpen}) =>
-    isLoginModalOpen &&
+  ${({ isModalOpen }) =>
+    isModalOpen &&
     css`
       transform: translate(-50%, -50%);
     `}
@@ -60,12 +60,12 @@ export const StyledHeader = styled.h3`
   width: 80%;
   margin: 20px auto;
   text-align: center;
-  font-size: ${({theme: {fontSize}}) => fontSize.xxl};
-  color: ${({theme: {accentsColor}}) => accentsColor};
+  font-size: ${({ theme: { fontSize } }) => fontSize.xxl};
+  color: ${({ theme: { accentsColor } }) => accentsColor};
 
   @media (orientation: landscape) {
     margin: 10px auto;
-    font-size: ${({theme: {fontSize}}) => fontSize.xl};
+    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   }
 
   @media (min-width: 1024px) {
@@ -84,35 +84,35 @@ export const StyledForm = styled(Form)`
 `;
 
 export const StyledLabel = styled.label`
-  font-size: ${({theme: {fontSize}}) => fontSize.xl};
+  font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   font-weight: bold;
-  color: ${({theme: {accentsColor}}) => accentsColor};
+  color: ${({ theme: { accentsColor } }) => accentsColor};
   margin: 10px 0;
 
   @media (orientation: landscape) {
-    font-size: ${({theme: {fontSize}}) => fontSize.l};
+    font-size: ${({ theme: { fontSize } }) => fontSize.l};
   }
 
   @media (min-width: 1024px) {
-    font-size: ${({theme: {fontSize}}) => fontSize.xl};
+    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   }
 `;
 
 export const StyledField = styled(Field)`
-  font-size: ${({theme: {fontSize}}) => fontSize.xl};
+  font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   width: 100%;
   height: 8%;
-  border: 2px solid ${({theme: {accentsColor}}) => accentsColor};
+  border: 2px solid ${({ theme: { accentsColor } }) => accentsColor};
   border-radius: 15px;
   text-align: center;
 
   @media (orientation: landscape) {
-    font-size: ${({theme: {fontSize}}) => fontSize.l};
+    font-size: ${({ theme: { fontSize } }) => fontSize.l};
     height: 10%;
   }
 
   @media (min-width: 1024px) {
-    font-size: ${({theme: {fontSize}}) => fontSize.xl};
+    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   }
 `;
 
@@ -120,11 +120,11 @@ export const StyledButton = styled.button`
   margin-top: 15px;
   width: 50%;
   padding: 5% 3%;
-  font-size: ${({theme: {fontSize}}) => fontSize.l};
-  color: ${({theme: {accentsColor}}) => accentsColor};
+  font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  color: ${({ theme: { accentsColor } }) => accentsColor};
   font-weight: bold;
-  background-color: ${({theme: {primaryColor}}) => primaryColor};
-  border: 2px solid ${({theme: {accentsColor}}) => accentsColor};
+  background-color: ${({ theme: { primaryColor } }) => primaryColor};
+  border: 2px solid ${({ theme: { accentsColor } }) => accentsColor};
   border-radius: 15px;
 
   @media (orientation: landscape) {

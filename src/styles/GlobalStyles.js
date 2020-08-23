@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 *, *::before, *::after {
@@ -29,6 +29,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     margin-top: 120px;
+    margin-bottom: 45px;
 }
 `;
 

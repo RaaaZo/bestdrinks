@@ -1,16 +1,15 @@
-import React, {useContext, useState} from 'react';
-import PropTypes from 'prop-types';
-import styled, {css} from 'styled-components';
-import {Link, NavLink} from 'react-router-dom';
-import {AuthContext} from 'context/AuthContext';
+import React, { useContext, useState } from "react";
+import styled, { css } from "styled-components";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "context/AuthContext";
 
-import drinks from 'assets/svg/drinks.svg';
-import favourite from 'assets/svg/favourite.svg';
-import login from 'assets/svg/login.svg';
-import logout from 'assets/svg/logout.svg';
-import myDrinks from 'assets/svg/myDrinks.svg';
-import profile from 'assets/svg/profile.svg';
-import LogoutModal from '../LogoutModal/LogoutModal';
+import drinks from "assets/svg/drinks.svg";
+import favourite from "assets/svg/favourite.svg";
+import login from "assets/svg/login.svg";
+import logout from "assets/svg/logout.svg";
+import myDrinks from "assets/svg/myDrinks.svg";
+import profile from "assets/svg/profile.svg";
+import LogoutModal from "../LogoutModal/LogoutModal";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -39,7 +38,7 @@ const StyledList = styled.ul`
   justify-content: space-between;
   width: 80%;
 
-  ${({isLoggedIn}) =>
+  ${({ isLoggedIn }) =>
     isLoggedIn &&
     css`
       justify-content: space-evenly;
@@ -47,7 +46,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  font-size: ${({theme}) => theme.fontSize.l};
+  font-size: ${({ theme }) => theme.fontSize.l};
   padding: 30px;
   text-decoration: none;
   list-style: none;
@@ -56,8 +55,8 @@ const StyledListItem = styled.li`
 
 const StyledLink = styled(Link)`
   margin-left: 20px;
-  color: ${({theme}) => theme.secondaryColor};
-  font-size: ${({theme}) => theme.fontSize.xxl};
+  color: ${({ theme }) => theme.secondaryColor};
+  font-size: ${({ theme }) => theme.fontSize.xxl};
   font-weight: bold;
 `;
 
@@ -81,7 +80,7 @@ const StyledImg = styled.img`
 `;
 
 const Navigation = () => {
-  const {isLoggedIn, handleIsLoginModalOpen} = useContext(AuthContext);
+  const { isLoggedIn, handleIsLoginModalOpen } = useContext(AuthContext);
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
@@ -96,15 +95,15 @@ const Navigation = () => {
         isLogoutModalOpen={isLogoutModalOpen}
       />
       <Wrapper>
-        <StyledLink to='/'>BestDrinks</StyledLink>
+        <StyledLink to="/">BestDrinks</StyledLink>
         <StyledList>
           <StyledListItem
             exact
             as={NavLink}
-            activeClassName='activeLink'
-            to='/'
+            activeClassName="activeLink"
+            to="/"
           >
-            <StyledImg src={drinks} alt='strona główna' />
+            <StyledImg src={drinks} alt="strona główna" />
           </StyledListItem>
 
           {isLoggedIn && (
@@ -112,28 +111,28 @@ const Navigation = () => {
               <StyledListItem
                 exact
                 as={NavLink}
-                activeClassName='activeLink'
-                to='/profile'
+                activeClassName="activeLink"
+                to="/profile"
               >
-                <StyledImg src={profile} alt='profil' />
+                <StyledImg src={profile} alt="profil" />
               </StyledListItem>
 
               <StyledListItem
                 exact
                 as={NavLink}
-                activeClassName='activeLink'
-                to='/profile/favourites'
+                activeClassName="activeLink"
+                to="/profile/favourites"
               >
-                <StyledImg src={favourite} alt='ulubione' />
+                <StyledImg src={favourite} alt="ulubione" />
               </StyledListItem>
 
               <StyledListItem
                 exact
                 as={NavLink}
-                activeClassName='activeLink'
-                to='/profile/myRecipes'
+                activeClassName="activeLink"
+                to="/profile/myRecipes"
               >
-                <StyledImg src={myDrinks} alt='moje przepisy' />
+                <StyledImg src={myDrinks} alt="moje przepisy" />
               </StyledListItem>
             </>
           )}
@@ -142,18 +141,18 @@ const Navigation = () => {
             <StyledListItem
               exact
               as={NavLink}
-              activeClassName='activeLink'
-              to={'/'}
+              activeClassName="activeLink"
+              to={"/"}
               onClick={handleIsLogoutModalOpen}
             >
-              <StyledImg src={logout} alt='wylogowanie' />
+              <StyledImg src={logout} alt="wylogowanie" />
             </StyledListItem>
           ) : (
             <StyledListItem>
               <StyledImg
                 onClick={handleIsLoginModalOpen}
                 src={login}
-                alt='logowanie'
+                alt="logowanie"
               />
             </StyledListItem>
           )}
@@ -162,7 +161,5 @@ const Navigation = () => {
     </>
   );
 };
-
-Navigation.propTypes = {};
 
 export default Navigation;

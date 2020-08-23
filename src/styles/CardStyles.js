@@ -9,6 +9,7 @@ export const CardWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px auto;
+  background-color: ${({ theme }) => theme.secondaryColor};
   border: 2px solid ${({ theme }) => theme.accentsColor};
   cursor: pointer;
 
@@ -17,6 +18,12 @@ export const CardWrapper = styled.div`
     css`
       height: 100%;
       max-width: 800px;
+    `}
+
+  ${({ profiledata }) =>
+    profiledata &&
+    css`
+      margin: 20px 30px;
     `}
 `;
 
@@ -41,4 +48,19 @@ export const DetailsData = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
+`;
+
+export const StyledCardButton = styled.button`
+  padding: 6px 15px;
+  font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  font-weight: bold;
+  background-color: ${({ theme }) => theme.accentsColor};
+  border: 2px solid black;
+  border-radius: 25px;
+`;
+
+export const StyledDate = styled.p`
+  font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  font-weight: bold;
+  color: ${({ theme }) => theme.accentsColor};
 `;

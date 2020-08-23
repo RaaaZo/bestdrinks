@@ -1,14 +1,15 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 
 import bartender from "assets/svg/bartender.svg";
-import { useHistory } from "react-router-dom";
 import {
   CardWrapper,
   StyledSvg,
   StyledDescription,
-  DetailsData
+  DetailsData,
+  StyledCardButton,
+  StyledDate,
 } from "styles/CardStyles";
+import usePushHistory from "hooks/usePushHistory";
 
 const DUMMY_DATA = [
   {
@@ -17,7 +18,7 @@ const DUMMY_DATA = [
     desc:
       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
     user: "Mateusz",
-    date: "13.08.2020"
+    date: "13.08.2020",
   },
   {
     id: 2,
@@ -25,7 +26,7 @@ const DUMMY_DATA = [
     desc:
       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde!",
     user: "Mateusz",
-    date: "13.08.2020"
+    date: "13.08.2020",
   },
   {
     id: 3,
@@ -33,27 +34,23 @@ const DUMMY_DATA = [
     desc:
       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae",
     user: "Mateusz",
-    date: "13.08.2020"
-  }
+    date: "13.08.2020",
+  },
 ];
 
 const Card = () => {
-  const history = useHistory();
-
-  const routeToDetailsPage = drinkId => {
-    history.push(`/drink/${drinkId}`);
-  };
+  const pushToDetailedCard = usePushHistory();
 
   return (
     <>
-      {DUMMY_DATA.map(item => (
+      {DUMMY_DATA.map((item) => (
         <Fragment key={item.id}>
-          <CardWrapper onClick={() => routeToDetailsPage(item.id)}>
+          <CardWrapper onClick={() => pushToDetailedCard(`/drink/${item.id}`)}>
             <StyledSvg src={item.img} alt="zdjęcie drinka" />
             <StyledDescription>{item.desc}</StyledDescription>
             <DetailsData>
-              <p>{item.user}</p>
-              <p>{item.date}</p>
+              <StyledCardButton>{item.user}</StyledCardButton>
+              <StyledDate>{item.date}</StyledDate>
             </DetailsData>
           </CardWrapper>
         </Fragment>
@@ -61,7 +58,5 @@ const Card = () => {
     </>
   );
 };
-
-Card.propTypes = {};
 
 export default Card;
