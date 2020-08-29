@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import drinks from "assets/svg/drinks.svg";
-import favourite from "assets/svg/favourite.svg";
 import login from "assets/svg/login.svg";
 import logout from "assets/svg/logout.svg";
 import myDrinks from "assets/svg/myDrinks.svg";
@@ -118,7 +117,7 @@ const MobileModal = ({ handleSetIsMenuOpen, isMenuOpen }) => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleIsLogoutModalOpen = () => {
-    setIsLogoutModalOpen((isLogoutModalOpen) => !isLogoutModalOpen);
+    setIsLogoutModalOpen(isLogoutModalOpen => !isLogoutModalOpen);
   };
 
   return (
@@ -151,15 +150,7 @@ const MobileModal = ({ handleSetIsMenuOpen, isMenuOpen }) => {
               >
                 <StyledImg src={profile} alt="profil" />
               </StyledNavLinks>
-              <StyledNavLinks
-                as={NavLink}
-                onClick={handleSetIsMenuOpen}
-                exact
-                activeClassName="activeLink"
-                to="/profile/favourites"
-              >
-                <StyledImg src={favourite} alt="ulubione" />
-              </StyledNavLinks>
+
               <StyledNavLinks
                 as={NavLink}
                 onClick={handleSetIsMenuOpen}
@@ -203,7 +194,7 @@ const MobileModal = ({ handleSetIsMenuOpen, isMenuOpen }) => {
 
 MobileModal.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,
-  handleSetIsMenuOpen: PropTypes.func.isRequired,
+  handleSetIsMenuOpen: PropTypes.func.isRequired
 };
 
 export default MobileModal;

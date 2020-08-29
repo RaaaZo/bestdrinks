@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 
 import bartender from "assets/svg/bartender.svg";
 
@@ -9,70 +10,114 @@ import {
   DetailsData,
   StyledDate,
   StyledCardButton,
+  StyledError,
+  CardInnerWrapper
 } from "styles/CardStyles";
 import usePushHistory from "hooks/usePushHistory";
+import { AuthContext } from "context/AuthContext";
+import Axios from "axios";
+import LoadingSpinner from "components/shared/LoadingSpinner/LoadingSpinner";
+import {
+  ApiPageError,
+  ApiPageErrorMessage
+} from "components/ApiErrors/ApiErrors";
+import { StyledHeader } from "styles/FormikStyles";
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-    favourite: true,
-  },
-  {
-    id: 2,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-    favourite: false,
-  },
-  {
-    id: 3,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-    favourite: false,
-  },
-];
+const MyRecipesCards = ({ profilePage }) => {
+  const [cardsData, setCardsData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
-const MyRecipesCards = () => {
-  const pushToDetailedCard = usePushHistory();
+  const { user } = useContext(AuthContext);
+
+  const pushToUrl = usePushHistory();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(
+          `http://localhost:5000/api/recipes/drinks/${user.id}`
+        );
+
+        setCardsData(response.data.userDrinks);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setError(err.response.data.message);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  const deleteRecipe = async id => {
+    setIsLoading(true);
+    try {
+      await Axios.delete(`http://localhost:5000/api/recipes/deleteDrink/${id}`);
+      pushToUrl("/");
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+
+      setError(err.response.data.message);
+    }
+  };
+
+  if (!isLoading && cardsData === "undefined") {
+    return (
+      <CardWrapper>
+        <StyledSvg src={bartender} alt="zdjęcie drinka" />
+        <StyledError>Nie masz żadnych przepisów. Dodaj jakiś!</StyledError>
+      </CardWrapper>
+    );
+  }
 
   return (
     <>
-      {DUMMY_DATA.map((item) => (
-        <Fragment key={item.id}>
-          <CardWrapper onClick={() => pushToDetailedCard(`/drink/${item.id}`)}>
-            <StyledSvg src={item.img} alt="zdjęcie drinka" />
-            <StyledDescription>{item.shortDesc}</StyledDescription>
-            <DetailsData>
-              <StyledCardButton>Edytuj</StyledCardButton>
-              <StyledDate>{item.date}</StyledDate>
-            </DetailsData>
-          </CardWrapper>
-        </Fragment>
-      ))}
+      {isLoading && <LoadingSpinner />}
+
+      {error && !profilePage ? (
+        <ApiPageError>
+          <ApiPageErrorMessage>{error}</ApiPageErrorMessage>
+        </ApiPageError>
+      ) : null}
+
+      {cardsData &&
+        cardsData.map(item => (
+          <Fragment key={item.id}>
+            <CardWrapper>
+              <CardInnerWrapper onClick={() => pushToUrl(`/drink/${item.id}`)}>
+                <StyledSvg
+                  src={item.img ? item.img : bartender}
+                  alt="zdjęcie drinka"
+                />
+                <StyledHeader>{item.name}</StyledHeader>
+                <StyledDescription>
+                  {item.description.slice(0, 300)}
+                </StyledDescription>
+              </CardInnerWrapper>
+              <DetailsData>
+                <StyledCardButton
+                  onClick={() => pushToUrl(`/profile/myRecipes/${item.id}`)}
+                >
+                  Edytuj
+                </StyledCardButton>
+                <StyledCardButton onClick={() => deleteRecipe(item.id)}>
+                  Usuń
+                </StyledCardButton>
+                <StyledDate>{item.date}</StyledDate>
+              </DetailsData>
+            </CardWrapper>
+          </Fragment>
+        ))}
     </>
   );
+};
+
+MyRecipesCards.propTypes = {
+  profilePage: PropTypes.bool.isRequired
 };
 
 export default MyRecipesCards;

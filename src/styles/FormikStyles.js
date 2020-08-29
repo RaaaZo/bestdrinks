@@ -12,6 +12,7 @@ export const ModalFormikWrapper = styled.div`
   border: 2px solid ${({ theme }) => theme.accentsColor};
   border-radius: 15px;
   transition: transform 0.8s 0.1s ease-in-out;
+  z-index: 11;
 
   @media (orientation: landscape) {
     width: 50%;
@@ -126,6 +127,14 @@ export const StyledButton = styled.button`
   background-color: ${({ theme: { primaryColor } }) => primaryColor};
   border: 2px solid ${({ theme: { accentsColor } }) => accentsColor};
   border-radius: 15px;
+  transition: color 0.3s 0.1s ease-in-out,
+    background-color 0.3s 0.1s ease-in-out, border 0.3s 0.1s ease-in-out;
+
+  &:hover {
+    color: ${({ theme: { secondaryColor } }) => secondaryColor};
+    background-color: ${({ theme: { accentsColor } }) => accentsColor};
+    border: 2px solid ${({ theme: { primaryColor } }) => primaryColor};
+  }
 
   @media (orientation: landscape) {
     padding: 2%;

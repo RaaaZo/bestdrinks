@@ -1,7 +1,7 @@
-import React from 'react';
-import AuthContextProvider from './AuthContext';
+import React from "react";
+import AuthContextProvider from "./AuthContext";
 
-const Contexts = ({children}) => {
+const Contexts = ({ children }) => {
   return (
     <>
       <AuthContextProvider>{children}</AuthContextProvider>

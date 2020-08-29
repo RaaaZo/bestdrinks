@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import HomePage from "Pages/HomePage";
 import RegisterPage from "Pages/RegisterPage";
-import FavouritesPage from "Pages/FavouritesPage";
 import MyRecipesPage from "Pages/MyRecipesPage";
 import EditRecipePage from "Pages/EditRecipePage";
 import ProfilePage from "Pages/ProfilePage";
@@ -29,10 +28,6 @@ const Routes = () => {
 
       <Route exact path="/profile">
         {isLoggedIn ? <ProfilePage /> : <Redirect to="/" />}
-      </Route>
-
-      <Route exact path="/profile/favourites">
-        {isLoggedIn ? <FavouritesPage /> : <Redirect to="/" />}
       </Route>
 
       <Route exact path="/profile/myRecipes">

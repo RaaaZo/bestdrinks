@@ -133,7 +133,7 @@ const MobileMenu = ({ handleSetIsMenuOpen, isMenuOpen }) => {
 
 MobileMenu.propTypes = {
   handleSetIsMenuOpen: PropTypes.func.isRequired,
-  isMenuOpen: PropTypes.bool.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired
 };
 
 export default MobileMenu;

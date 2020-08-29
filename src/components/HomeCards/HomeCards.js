@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import bartender from "assets/svg/bartender.svg";
 import {
@@ -8,53 +8,92 @@ import {
   DetailsData,
   StyledCardButton,
   StyledDate,
+  StyledError,
+  CardInnerWrapper
 } from "styles/CardStyles";
 import usePushHistory from "hooks/usePushHistory";
-
-const DUMMY_DATA = [
-  {
-    id: 1,
-    img: bartender,
-    desc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-  {
-    id: 2,
-    img: bartender,
-    desc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde!",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-  {
-    id: 3,
-    img: bartender,
-    desc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-];
+import Axios from "axios";
+import LoadingSpinner from "components/shared/LoadingSpinner/LoadingSpinner";
+import {
+  ApiPageError,
+  ApiPageErrorMessage
+} from "components/ApiErrors/ApiErrors";
+import { StyledHeader } from "styles/FormikStyles";
+import { StyledPageHeader, PageHeaderWrapper } from "styles/ProfileStyles";
 
 const Card = () => {
+  const [cardsData, setCardsData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
+
   const pushToDetailedCard = usePushHistory();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(
+          "http://localhost:5000/api/recipes/allDrinks"
+        );
+
+        setCardsData(response.data.allDrinks);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setError(err.response.data.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!isLoading && error) {
+    return (
+      <CardWrapper>
+        <StyledSvg src={bartender} alt="zdjęcie drinka" />
+        <StyledError>
+          Nie ma żadnych przepisów. Zaloguj się i dodaj jakiś!
+        </StyledError>
+      </CardWrapper>
+    );
+  }
 
   return (
     <>
-      {DUMMY_DATA.map((item) => (
-        <Fragment key={item.id}>
-          <CardWrapper onClick={() => pushToDetailedCard(`/drink/${item.id}`)}>
-            <StyledSvg src={item.img} alt="zdjęcie drinka" />
-            <StyledDescription>{item.desc}</StyledDescription>
-            <DetailsData>
-              <StyledCardButton>{item.user}</StyledCardButton>
-              <StyledDate>{item.date}</StyledDate>
-            </DetailsData>
-          </CardWrapper>
-        </Fragment>
-      ))}
+      {isLoading && <LoadingSpinner />}
+
+      {error && (
+        <ApiPageError>
+          <ApiPageErrorMessage>{error}</ApiPageErrorMessage>
+        </ApiPageError>
+      )}
+      <PageHeaderWrapper>
+        <StyledPageHeader>Wszystkie przepisy :</StyledPageHeader>
+      </PageHeaderWrapper>
+      {cardsData &&
+        cardsData.map(item => (
+          <Fragment key={item.id}>
+            <CardWrapper>
+              <CardInnerWrapper
+                onClick={() => pushToDetailedCard(`/drink/${item.id}`)}
+              >
+                <StyledSvg
+                  src={item.img ? item.img : bartender}
+                  alt="zdjęcie drinka"
+                />
+                <StyledHeader>{item.name}</StyledHeader>
+                <StyledDescription>
+                  {item.description.slice(0, 300)}
+                </StyledDescription>
+              </CardInnerWrapper>
+              <DetailsData>
+                <StyledCardButton>{item.creatorName}</StyledCardButton>
+                <StyledDate>{item.date}</StyledDate>
+              </DetailsData>
+            </CardWrapper>
+          </Fragment>
+        ))}
     </>
   );
 };

@@ -1,13 +1,12 @@
-import React, { Fragment } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 
 import { PageWrapper } from "components/shared/PageWrapper/PageWrapper";
-import EditCard from "components/EditCard/EditCard";
+import EditForm from "components/EditForm/EditForm";
 
 const EditRecipePage = () => {
   return (
     <PageWrapper>
-      <EditCard />
+      <EditForm />
     </PageWrapper>
   );
 };

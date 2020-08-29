@@ -3,15 +3,8 @@ import styled, { css } from "styled-components";
 export const CardWrapper = styled.div`
   width: 100%;
   max-width: 450px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
-  background-color: ${({ theme }) => theme.secondaryColor};
-  border: 2px solid ${({ theme }) => theme.accentsColor};
-  cursor: pointer;
+  min-height: 450px;
+  margin: 40px auto;
 
   ${({ detailedCard }) =>
     detailedCard &&
@@ -25,6 +18,26 @@ export const CardWrapper = styled.div`
     css`
       margin: 20px 30px;
     `}
+`;
+
+export const CardInnerWrapper = styled.div`
+  width: 100%;
+  min-height: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border: 2px solid ${({ theme }) => theme.accentsColor};
+  cursor: pointer;
+
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 export const StyledSvg = styled.img`
@@ -42,25 +55,39 @@ export const StyledDescription = styled.p`
 `;
 
 export const DetailsData = styled.div`
-  width: 90%;
+  width: 95%;
   height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
+  align-items: flex-start;
 `;
 
 export const StyledCardButton = styled.button`
   padding: 6px 15px;
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
   font-weight: bold;
-  background-color: ${({ theme }) => theme.accentsColor};
+  background-color: transparent;
   border: 2px solid black;
   border-radius: 25px;
+  transition: background-color 0.3s 0.1s ease-in-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.accentsColor};
+  }
 `;
 
 export const StyledDate = styled.p`
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
   font-weight: bold;
-  color: ${({ theme }) => theme.accentsColor};
+
+  transition: transform 0.3s 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const StyledError = styled.h3`
+  text-align: center;
+  margin: 10px 10px;
 `;

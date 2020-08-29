@@ -9,6 +9,7 @@ export const CloseModal = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   transform: translateX(110%);
   transition: transform 1s ease-in-out;
+  z-index: 10;
 
   ${({ isModalOpen }) =>
     isModalOpen &&

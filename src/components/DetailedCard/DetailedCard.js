@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   CardWrapper,
   StyledSvg,
@@ -6,72 +6,85 @@ import {
   DetailsData,
   StyledCardButton,
   StyledDate,
+  StyledError,
+  CardInnerWrapper
 } from "styles/CardStyles";
 
 import bartender from "assets/svg/bartender.svg";
-import { useParams } from "react-router-dom";
-
-const DUMMY_DATA = [
-  {
-    id: 1,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-  {
-    id: 2,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-  {
-    id: 3,
-    img: bartender,
-    shortDesc:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla animi, odit eveniet dolorum asperiores unde eos voluptate molestiae, quisquam in aliquam neque ipsam vitae quod repudiandae, possimus sint repellendus!",
-    longDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, sequi dolor. Impedit sapiente eos, recusandae laudantium ducimus labore iusto doloremque laboriosam sed repellendus id similique illum aliquid odio! In perspiciatis minima facere dicta dolore veniam maxime perferendis distinctio itaque quas dolor commodi a, rerum nobis iure? Impedit nam ipsa ab, dolore possimus sed est veniam voluptas recusandae maiores, odio repellendus?",
-    recipe:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum, doloremque amet non ea dolorum! Velit accusantium quas rerum hic.",
-    user: "Mateusz",
-    date: "13.08.2020",
-  },
-];
+import { useParams, useHistory } from "react-router-dom";
+import Axios from "axios";
+import LoadingSpinner from "components/shared/LoadingSpinner/LoadingSpinner";
+import { StyledHeader } from "styles/FormikStyles";
+import { StyledBackArrow } from "components/shared/BackArrow/BackArrow";
 
 const DetailedCard = () => {
+  const [cardData, setCardData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
+
+  const history = useHistory();
+
   const { drinkId } = useParams();
 
-  const detailedDrink = DUMMY_DATA.filter(
-    (item) => item.id === Number(drinkId)
-  );
+  useEffect(() => {
+    setIsLoading(true);
+
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(
+          `http://localhost:5000/api/recipes/singleDrink/${drinkId}`
+        );
+
+        setCardData(response.data.drink);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+
+        setError(err.response.data.message);
+      }
+    };
+
+    fetchData();
+  }, [drinkId]);
+
+  if (!isLoading && error) {
+    return (
+      <CardWrapper>
+        <CardInnerWrapper>
+          <StyledSvg src={bartender} alt="zdjęcie drinka" />
+          <StyledError>{error}</StyledError>
+        </CardInnerWrapper>
+      </CardWrapper>
+    );
+  }
 
   return (
     <>
-      {detailedDrink.map((item) => (
-        <Fragment key={item.id}>
+      <StyledBackArrow onClick={() => history.goBack(1)} />
+
+      {isLoading && <LoadingSpinner />}
+
+      {cardData && (
+        <Fragment key={cardData.id}>
           <CardWrapper detailedCard="true">
-            <StyledSvg src={item.img} alt="zdjęcie drinka" />
-            <StyledDescription>{item.longDesc}</StyledDescription>
-            <StyledDescription>{item.recipe}</StyledDescription>
+            <CardInnerWrapper>
+              <StyledSvg
+                src={cardData.img ? cardData.img : bartender}
+                alt="zdjęcie drinka"
+              />
+
+              <StyledHeader>{cardData.name}</StyledHeader>
+              <StyledDescription>{cardData.description}</StyledDescription>
+              <StyledDescription>{cardData.recipe}</StyledDescription>
+            </CardInnerWrapper>
             <DetailsData>
-              <StyledCardButton>{item.user}</StyledCardButton>
-              <StyledDate>{item.date}</StyledDate>
+              <StyledCardButton>{cardData.creatorName}</StyledCardButton>
+
+              <StyledDate>{cardData.date}</StyledDate>
             </DetailsData>
           </CardWrapper>
         </Fragment>
-      ))}
+      )}
     </>
   );
 };

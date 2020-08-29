@@ -4,7 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
 
 import drinks from "assets/svg/drinks.svg";
-import favourite from "assets/svg/favourite.svg";
 import login from "assets/svg/login.svg";
 import logout from "assets/svg/logout.svg";
 import myDrinks from "assets/svg/myDrinks.svg";
@@ -51,6 +50,12 @@ const StyledListItem = styled.li`
   text-decoration: none;
   list-style: none;
   cursor: pointer;
+
+  ${({ activeLink }) =>
+    activeLink &&
+    css`
+      background-color: white;
+    `}
 `;
 
 const StyledLink = styled(Link)`
@@ -58,6 +63,15 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.secondaryColor};
   font-size: ${({ theme }) => theme.fontSize.xxl};
   font-weight: bold;
+  transition: color 0.3s 0.1s linear;
+
+  &:hover {
+    color: ${({ theme }) => theme.primaryColor};
+  }
+
+  @media (min-width: 1024px) {
+    font-size: ${({ theme }) => theme.fontSize.xxxl};
+  }
 `;
 
 const StyledImg = styled.img`
@@ -72,10 +86,15 @@ const StyledImg = styled.img`
   );
   border-radius: 30%;
   border: 2px solid black;
+  transition: background-color 0.3s 0.1s linear;
 
   @media (min-width: 1024px) {
     width: 60px;
     height: 60px;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
   }
 `;
 
@@ -85,7 +104,7 @@ const Navigation = () => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleIsLogoutModalOpen = () => {
-    setIsLogoutModalOpen((isLogoutModalOpen) => !isLogoutModalOpen);
+    setIsLogoutModalOpen(isLogoutModalOpen => !isLogoutModalOpen);
   };
 
   return (
@@ -115,15 +134,6 @@ const Navigation = () => {
                 to="/profile"
               >
                 <StyledImg src={profile} alt="profil" />
-              </StyledListItem>
-
-              <StyledListItem
-                exact
-                as={NavLink}
-                activeClassName="activeLink"
-                to="/profile/favourites"
-              >
-                <StyledImg src={favourite} alt="ulubione" />
               </StyledListItem>
 
               <StyledListItem

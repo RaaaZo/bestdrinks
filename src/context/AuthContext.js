@@ -4,8 +4,9 @@ export const AuthContext = createContext();
 const { Provider } = AuthContext;
 
 const AuthContextProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginModalOpen, setisLoginModalOpen] = useState(false);
+  const [user, setUser] = useState();
 
   const handleIsLoggedIn = () => {
     setIsLoggedIn(isLoggedIn => !isLoggedIn);
@@ -21,7 +22,9 @@ const AuthContextProvider = ({ children }) => {
         isLoggedIn,
         handleIsLoggedIn,
         isLoginModalOpen,
-        handleIsLoginModalOpen
+        handleIsLoginModalOpen,
+        user,
+        setUser
       }}
     >
       {children}

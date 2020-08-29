@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { AuthContext } from "context/AuthContext";
 import { CloseModal } from "../CloseModal/CloseModal";
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
   border: 2px solid ${({ theme }) => theme.accentsColor};
   border-radius: 15px;
   transition: transform 0.8s ease-in-out;
+  z-index: 100;
 
   ${({ isLogoutModalOpen }) =>
     isLogoutModalOpen &&
@@ -87,6 +89,11 @@ const LogoutModal = ({ isLogoutModalOpen, handleIsLogoutModalOpen }) => {
       </Wrapper>
     </>
   );
+};
+
+LogoutModal.propTypes = {
+  isLogoutModalOpen: PropTypes.bool.isRequired,
+  handleIsLogoutModalOpen: PropTypes.func.isRequired
 };
 
 export default LogoutModal;
