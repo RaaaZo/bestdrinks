@@ -1,6 +1,9 @@
 ## Description
 Page where you can add drink recipes. Front-end is written in React (used Context instead of Redux, and other libraries like Axios, Formik, Yup validation), Backend in Express.js, and I used MongoDB as a database.
 
+## Live
+https://best-drinks-295be.web.app/
+
 ## Backend code below
 https://github.com/RaaaZo/bestDrinks-backend
 
