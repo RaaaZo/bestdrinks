@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+Page where you can add drink recipes. Front-end is written in React (used Context instead of Redux, and other libraries like Axios, Formik, Yup validation), Backend in Express.js, and I used MongoDB as a database.
+
+## Backend code below
+https://github.com/RaaaZo/bestDrinks-backend
 
 ## Available Scripts
 
